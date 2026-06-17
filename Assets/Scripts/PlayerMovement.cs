@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
@@ -10,10 +11,12 @@ public class PlayerMovement : MonoBehaviour
      [SerializeField] float zRotation = 40f;
     [SerializeField]   float RotationSpeed =30f;
     Vector2 movementValue;
+    bool isFiring = false;
+   [SerializeField] GameObject[] lasers;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
@@ -21,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     {
         ProcessMovement();
         ProcessRotation();
+        ProcessFiring();
 
     }
  public void OnMove(InputValue value)
@@ -40,6 +44,26 @@ public class PlayerMovement : MonoBehaviour
         transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotationSide, RotationSpeed *Time.deltaTime);
 
     }
+    public void OnFire(InputValue value)
+    {
 
+        isFiring = value.isPressed;
+       
+
+    }
+    void ProcessFiring()
+    {
+        
+        
+             Debug.Log("mouse pressing");
+
+        foreach (GameObject laser in lasers) {
+            //we can use "var" instead of "ParticleSystem.EmissionModule emisiionModule"
+            ParticleSystem.EmissionModule emissionModule = laser.GetComponent<ParticleSystem>().emission;
+            emissionModule.enabled = isFiring;
+        }
+        
+       
+    }
    
 }
