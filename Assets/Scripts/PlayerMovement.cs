@@ -11,11 +11,16 @@ public class PlayerMovement : MonoBehaviour
      [SerializeField] float zRotation = 40f;
     [SerializeField]   float RotationSpeed =30f;
     Vector2 movementValue;
+    [Header("Firing Settings")]
+    [SerializeField] RectTransform CrossHairTransform;
     bool isFiring = false;
    [SerializeField] GameObject[] lasers;
+    [SerializeField]Transform TargetPosition;
+    [SerializeField] float targetDistace = 25f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Cursor.visible = false;
        
     }
 
@@ -25,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
         ProcessMovement();
         ProcessRotation();
         ProcessFiring();
+        ProcessTarget();
+        ProcessAimimg();
 
     }
  public void OnMove(InputValue value)
@@ -64,6 +71,27 @@ public class PlayerMovement : MonoBehaviour
         }
         
        
+    }
+
+    void ProcessTarget()
+    {
+        Vector3 TargetBallPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, targetDistace);
+        TargetPosition.position = Camera.main.ScreenToWorldPoint(TargetBallPoint);
+
+    }
+
+    void ProcessAimimg()
+    {
+        CrossHairTransform.position=Input.mousePosition;
+
+        foreach (GameObject laser in lasers)
+        {
+            Vector3 AimimgBallPoint = TargetPosition.position - this.transform.position;
+            Quaternion TargetRotaion = Quaternion.LookRotation(AimimgBallPoint);
+            laser.transform.rotation = TargetRotaion;
+
+        }
+
     }
    
 }
