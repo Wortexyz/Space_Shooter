@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 4298949948036070740}
   m_Layer: 0
   m_Name: BaseEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,6 +123,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DestroyEffect: {fileID: 8697622470164996818, guid: cb7c790c11bdc594eb35dae79dc23c1e, type: 3}
+  HitCount: 5
+  PointByEnemy: 10
 --- !u!1 &9135873252869373134
 GameObject:
   m_ObjectHideFlags: 0

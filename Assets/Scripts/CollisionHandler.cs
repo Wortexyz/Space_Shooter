@@ -3,6 +3,13 @@ using UnityEngine;
 public class CollisionHandler : MonoBehaviour
 {
     [SerializeField] GameObject PlayerDestroyEffect ;
+
+    GameSceneManager gameSceneManager;
+
+    private void Start()
+    {
+        gameSceneManager=FindFirstObjectByType<GameSceneManager>();
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Enemy")
@@ -15,6 +22,8 @@ public class CollisionHandler : MonoBehaviour
             Debug.Log($"Hit : {other.name}");
 
             Destroy(gameObject);
+            gameSceneManager.ReloadScene();
+
         }
        
     }
